@@ -10,6 +10,6 @@ RewriteCond %{REQUEST_FILENAME} !-f
 
 
 RewriteRule ^(.*)$ /public/$1 
-#RewriteRule ^ index.php [L]
-RewriteRule ^(/)?$ public/index.php [L] 
+#RewriteRule ^ login.php [L]
+RewriteRule ^(/)?$ public/login.php [L] 
 </IfModule>
