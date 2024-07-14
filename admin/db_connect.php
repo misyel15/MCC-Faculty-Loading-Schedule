@@ -1,4 +1,8 @@
 <?php
+// Enable error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // Database connection parameters
 $servername = '127.0.0.1';
 $username = 'u510162695_scheduling_db';
