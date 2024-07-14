@@ -11,7 +11,7 @@
         position: fixed; /* Fixes sidebar position */
         top: 0;
         left: 0;
-        width: 17.5%; /* Fixed width for sidebar */
+        width: 16.5%; /* Fixed width for sidebar */
         z-index: 1; /* Ensures sidebar is on top of other content */
         overflow-x: hidden; /* Hides horizontal overflow */
         padding-top: 60px; /* Padding at the top */
