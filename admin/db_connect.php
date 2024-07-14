@@ -6,7 +6,7 @@ ini_set('display_errors', 1);
 // Database connection parameters
 $servername = '127.0.0.1';
 $username = 'u510162695_scheduling_db';
-$password = ''; // Ensure to set a proper password here
+$password = '1Scheduling_db'; // Ensure to set a proper password here
 $dbname = 'u510162695_scheduling_db';
 $port = 3306;
 
