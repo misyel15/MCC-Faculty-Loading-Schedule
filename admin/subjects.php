@@ -20,6 +20,33 @@
                         </span>
                     </div>
                     <div class="card-body">
+                        <!-- Filter Section -->
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="filter-course">Filter by Course</label>
+                                <select id="filter-course" class="form-control">
+                                    <option value="">All Courses</option>
+                                    <?php 
+                                        $sql = "SELECT * FROM courses";
+                                        $query = $conn->query($sql);
+                                        while($row= $query->fetch_array()):
+                                            $course = $row['course'];
+                                    ?>
+                                    <option value="<?php echo  $course ?>"><?php echo ucwords($course) ?></option>
+                                    <?php endwhile; ?>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="filter-semester">Filter by Semester</label>
+                                <select id="filter-semester" class="form-control">
+                                    <option value="">All Semesters</option>
+                                    <option value="1st">1st Semester</option>
+                                    <option value="2nd">2nd Semester</option>
+                                    <option value="Summer">Summer</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <table id="subjectTable" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -34,7 +61,7 @@
                                 $subject = $conn->query("SELECT * FROM subjects order by id asc");
                                 while($row=$subject->fetch_assoc()):
                                 ?>
-                                <tr>
+                                <tr class="subject-row" data-course="<?php echo $row['course'] ?>" data-semester="<?php echo $row['semester'] ?>">
                                     <td class="text-center"><?php echo $i++ ?></td>
                                     <td class="">
                                         <p><b>Subject:</b> <?php echo $row['subject'] ?></p>
@@ -145,7 +172,7 @@
                                             <option value="" disabled selected>Select Semester</option>
                                             <option value="1st">1st</option>
                                             <option value="2nd">2nd</option>
-                                            <option value="3nd">Summer</option>
+                                            <option value="Summer">Summer</option>
                                         </select>
                                     </div>
                                 </div>
@@ -213,52 +240,51 @@
         $('#subjectTable').DataTable();
         
         $('#manage-subject').submit(function(e) {
-    e.preventDefault();
-    
-    $.ajax({
-        url: 'ajax.php?action=save_subject',
-        data: new FormData($(this)[0]),
-        cache: false,
-        contentType: false,
-        processData: false,
-        method: 'POST',
-        type: 'POST',
-        success: function(resp){
-            if(resp == 1){
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success!',
-                    text: 'Data successfully added!',
-                    showConfirmButton: true,
-                     
-                }).then(function() {
-                    location.reload();
-                });
-            } else if(resp == 2){
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success!',
-                    text: 'Data successfully updated!',
-                    showConfirmButton: true,
-                        
-                }).then(function() {
-                    location.reload();
-                });
-            } else if(resp == 0){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error!',
-                    text: 'Subject already exists!',
-                    showConfirmButton: true,
-                        
-                });
-            }
-        }
-    });
-});
+            e.preventDefault();
+            
+            $.ajax({
+                url: 'ajax.php?action=save_subject',
+                data: new FormData($(this)[0]),
+                cache: false,
+                contentType: false,
+                processData: false,
+                method: 'POST',
+                type: 'POST',
+                success: function(resp){
+                    if(resp == 1){
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: 'Data successfully added!',
+                            showConfirmButton: true,
+                             
+                        }).then(function() {
+                            location.reload();
+                        });
+                    } else if(resp == 2){
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: 'Data successfully updated!',
+                            showConfirmButton: true,
+                                
+                        }).then(function() {
+                            location.reload();
+                        });
+                    } else if(resp == 0){
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: 'Subject already exists!',
+                            showConfirmButton: true,
+                                
+                        });
+                    }
+                }
+            });
+        });
 
         $('.edit_subject').click(function() {
-            start_load();
             var cat = $('#manage-subject');
             cat.get(0).reset();
             cat.find("[name='id']").val($(this).attr('data-id'));
@@ -272,7 +298,6 @@
             cat.find("[name='cyear']").val($(this).attr('data-year'));
             cat.find("[name='semester']").val($(this).attr('data-semester'));
             cat.find("[name='specialization']").val($(this).attr('data-special'));
-            end_load();
         });
 
         $('.delete_subject').click(function() {
@@ -309,6 +334,30 @@
                             location.reload();
                         });
                     }
+                }
+            });
+        }
+
+        $('#filter-course').change(function() {
+            filterSubjects();
+        });
+
+        $('#filter-semester').change(function() {
+            filterSubjects();
+        });
+
+        function filterSubjects() {
+            var course = $('#filter-course').val();
+            var semester = $('#filter-semester').val();
+            
+            $('.subject-row').each(function() {
+                var rowCourse = $(this).data('course');
+                var rowSemester = $(this).data('semester');
+                
+                if ((course === "" || course === rowCourse) && (semester === "" || semester === rowSemester)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
                 }
             });
         }
