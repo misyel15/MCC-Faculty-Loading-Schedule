@@ -7,7 +7,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
-<div class="container-fluid" >
+<div class="container-fluid" style="width:100%;">
 	
 	<div class="col-lg-12">
 	
