@@ -8,7 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <div class="container-fluid">
-    <div class="col-lg-18">
+    <div class="col-lg-12">
         <div class="row">
             <!-- Table Panel -->
             <div class="col-md-12">
