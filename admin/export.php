@@ -21,19 +21,10 @@
 							<?php endwhile; ?>
 							</select>
 							
-							<select class="form-control" name="year" id="year" required>
-							<option value="0" disabled selected>Select Year</option>
-							<?php 
-									$sql = "SELECT DISTINCT(year) FROM section ";
-									$query = $conn->query($sql);
-									while($row= $query->fetch_array()):
-										$year = $row['year'];
-									?>
-							<option value="<?php echo $year ?>" <?php echo isset($_GET['year']) && $_GET['year'] == $row['year'] ? 'selected' : '' ?>><?php echo ucwords($year) ?></option>
-						<?php endwhile; ?>
+							
 						</select>
 						<select name="sec_id" id="sec_id" class="custom-select select2">
-							<option value="0" disabled selected>Select Section</option>
+							<option value="0" disabled selected>Select Yr. & Sec.</option>
 							<?php 
 								$sections = $conn->query("SELECT * FROM section order by year asc");
 								while($row= $sections->fetch_array()):
