@@ -119,11 +119,6 @@ require_once(dirname(__FILE__).'/include/tcpdf_colors.php');
 require_once(dirname(__FILE__).'/include/tcpdf_images.php');
 // TCPDF static methods and data
 require_once(dirname(__FILE__).'/include/tcpdf_static.php');
-// Example of rounding to the nearest integer
-$intValue = round($floatValue);
-
-// Example of truncating to an integer (removes decimal part)
-$intValue = intval($floatValue);
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
