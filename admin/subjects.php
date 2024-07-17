@@ -128,13 +128,13 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label class="control-label">Lab Units</label>
-                                        <input type="text" class="form-control" name="lab_units" required>
+                                        <input type="number" class="form-control" name="lab_units" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label class="control-label">Hours</label>
-                                        <input type="time" class="form-control" name="hours" required>
+                                        <input type="hour" class="form-control" name="hours" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
