@@ -104,37 +104,37 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label class="control-label">Subject</label>
-                                        <input type="text" class="form-control" name="subject">
+                                        <input type="text" class="form-control" name="subject" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label class="control-label">Description</label>
-                                        <textarea class="form-control" cols="30" rows='3' name="description"></textarea>
+                                        <textarea class="form-control" cols="30" rows='3' name="description" required></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label class="control-label">Total Units</label>
-                                        <input type="text" class="form-control" name="units">
+                                        <input type="text" class="form-control" name="units" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label class="control-label">Lec Units</label>
-                                        <input type="text" class="form-control" name="lec_units">
+                                        <input type="text" class="form-control" name="lec_units" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label class="control-label">Lab Units</label>
-                                        <input type="text" class="form-control" name="lab_units">
+                                        <input type="text" class="form-control" name="lab_units" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label class="control-label">Hours</label>
-                                        <input type="text" class="form-control" name="hours">
+                                        <input type="text" class="form-control" name="hours" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -156,7 +156,7 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label for="cyear" class="control-label">Year</label>
-                                        <select class="form-control" name="cyear" id="cyear">
+                                        <select class="form-control" name="cyear" id="cyear" required>
                                             <option value="" disabled selected>Select Year</option>
                                             <option value="1st">1st</option>
                                             <option value="2nd">2nd</option>
@@ -168,7 +168,7 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label for="semester" class="control-label">Semester</label>
-                                        <select class="form-control" name="semester" id="semester">
+                                        <select class="form-control" name="semester" id="semester" required>
                                             <option value="" disabled selected>Select Semester</option>
                                             <option value="1st">1st</option>
                                             <option value="2nd">2nd</option>
@@ -179,7 +179,7 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label for="specialization" class="control-label">Specialization</label>
-                                        <select class="form-control" name="specialization" id="specialization">
+                                        <select class="form-control" name="specialization" id="specialization" required>
                                             <option value="" disabled selected>Select Specialization</option>
                                             <option value="Major">Major</option>
                                             <option value="Minor">Minor</option>
@@ -188,9 +188,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                               
                             </div>
                         </form>
                     </div>
@@ -211,7 +210,6 @@
         border: 1px solid #ddd;
     }
 
-    /* Change to light gray */
     .datagrid th {
         background-color: #ccc; /* Light gray background */
         color: #000; /* Black text */
@@ -238,10 +236,28 @@
 <script>
     $(document).ready(function() {
         $('#subjectTable').DataTable();
-        
+
         $('#manage-subject').submit(function(e) {
             e.preventDefault();
             
+            var valid = true;
+            $('#manage-subject input, #manage-subject select, #manage-subject textarea').each(function() {
+                if ($(this).val() === "" || $(this).val() === null) {
+                    valid = false;
+                    return false;
+                }
+            });
+
+            if (!valid) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Incomplete Form',
+                    text: 'Please fill in all required fields before submitting.',
+                    showConfirmButton: true,
+                });
+                return;
+            }
+
             $.ajax({
                 url: 'ajax.php?action=save_subject',
                 data: new FormData($(this)[0]),
