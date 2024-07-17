@@ -116,13 +116,13 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label class="control-label">Total Units</label>
-                                        <input type="text" class="form-control" name="units" required>
+                                        <input type="number" class="form-control" name="units" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label class="control-label">Lec Units</label>
-                                        <input type="text" class="form-control" name="lec_units" required>
+                                        <input type="number" class="form-control" name="lec_units" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -134,7 +134,7 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label class="control-label">Hours</label>
-                                        <input type="text" class="form-control" name="hours" required>
+                                        <input type="time" class="form-control" name="hours" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
