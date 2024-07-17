@@ -134,7 +134,7 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label class="control-label">Hours</label>
-                                        <input type="hour" class="form-control" name="hours" required>
+                                        <input type="number" class="form-control" name="hours" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
