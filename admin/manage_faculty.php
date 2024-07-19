@@ -14,8 +14,8 @@ if(isset($_GET['id'])){
 		<div class="row form-group">
 			<div class="col-md-4">
 				<label class="control-label">ID No.</label>
-				<input type="text" name="id_no" class="form-control" value="<?php echo isset($id_no) ? $id_no:'' ?>" >
-				<small><i>Leave this blank if you want to auto-generate an ID no.</i></small>
+				<input type="number" name="id_no" class="form-control" value="<?php echo isset($id_no) ? $id_no:'' ?>" >
+				<small><i>Leave this blank if you want to auto-generate ID no.</i></small>
 			</div>
 		</div>
 		<div class="row form-group">
@@ -39,47 +39,64 @@ if(isset($_GET['id'])){
 			</div>
 			<div class="col-md-4">
 				<label class="control-label">Contact #</label>
-				<input type="text" name="contact" class="form-control" value="<?php echo isset($contact) ? $contact:'' ?>" required>
+				<input type="number" name="contact" class="form-control" value="<?php echo isset($contact) ? $contact:'' ?>" required>
 			</div>
 			<div class="col-md-4">
 				<label class="control-label">Gender</label>
-				<select name="gender" required="" class="custom-select" id="">
-					<option <?php echo isset($gender) && $gender == 'Male' ? 'selected' : '' ?>>Male</option>
-					<option <?php echo isset($gender) && $gender == 'Female' ? 'selected' : '' ?>>Female</option>
+				<select name="gender" required="" class="custom-select">
+					<option value="Male" <?php echo isset($gender) && $gender == 'Male' ? 'selected' : '' ?>>Male</option>
+					<option value="Female" <?php echo isset($gender) && $gender == 'Female' ? 'selected' : '' ?>>Female</option>
 				</select>
 			</div>
 		</div>
 		<div class="row form-group">
 			<div class="col-md-12">
 				<label class="control-label">Address</label>
-				<textarea name="address" class="form-control"><?php echo isset($address) ? $address : '' ?></textarea>
+				<textarea name="address" class="form-control" required><?php echo isset($address) ? $address : '' ?></textarea>
+			</div>
+		</div>
+		<div class="row form-group">
+			<div class="col-md-12 text-center">
+				<button class="btn btn-primary btn-sm" type="submit">Save</button>
 			</div>
 		</div>
 	</form>
 </div>
 
 <script>
-    function validateForm() {
-        let valid = true;
-        $('#manage-faculty').find('input[required], select[required]').each(function() {
-            if ($(this).val() === '') {
-                valid = false;
-                return false; // Break the loop
-            }
-        });
-        if (!valid) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Incomplete Form',
-                text: 'Please fill out all required fields before submitting.',
-            });
-        }
-        return valid;
-    }
-
     $('#manage-faculty').submit(function(e){
         e.preventDefault();
-        if (validateForm()) {
+
+        // Validate form fields
+        let valid = true;
+        let fields = $(this).find('input[required], select[required], textarea[required]');
+        fields.each(function() {
+            if ($(this).val().trim() === '') {
+                valid = false;
+                $(this).focus();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please fill out all required fields.',
+                });
+                return false;
+            }
+        });
+
+        // Validate contact number
+        let contact = $('input[name="contact"]').val().trim();
+        if (contact.length !== 11 || !/^\d{11}$/.test(contact)) {
+            valid = false;
+            $('input[name="contact"]').focus();
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Contact number must be exactly 11 digits.',
+            });
+            return false;
+        }
+
+        if (valid) {
             $.ajax({
                 url: 'ajax.php?action=save_faculty',
                 method: 'POST',
