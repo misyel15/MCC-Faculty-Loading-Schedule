@@ -6,18 +6,17 @@ if(isset($_GET['id'])){
 		$$k = $v;
 	}
 }
-
 ?>
 <div class="container-fluid">
 	<form action="" id="manage-faculty">
 		<div id="msg"></div>
-				<input type="hidden" name="id" value="<?php echo isset($_GET['id']) ? $_GET['id']:'' ?>" class="form-control">
+		<input type="hidden" name="id" value="<?php echo isset($_GET['id']) ? $_GET['id']:'' ?>" class="form-control">
 		<div class="row form-group">
 			<div class="col-md-4">
-						<label class="control-label">ID No.</label>
-						<input type="text" name="id_no" class="form-control" value="<?php echo isset($id_no) ? $id_no:'' ?>" >
-						<small><i>Leave this blank if you want to a auto generate ID no.</i></small>
-					</div>
+				<label class="control-label">ID No.</label>
+				<input type="text" name="id_no" class="form-control" value="<?php echo isset($id_no) ? $id_no:'' ?>" >
+				<small><i>Leave this blank if you want to auto-generate an ID no.</i></small>
+			</div>
 		</div>
 		<div class="row form-group">
 			<div class="col-md-4">
@@ -60,52 +59,67 @@ if(isset($_GET['id'])){
 </div>
 
 <script>
+    function validateForm() {
+        let valid = true;
+        $('#manage-faculty').find('input[required], select[required]').each(function() {
+            if ($(this).val() === '') {
+                valid = false;
+                return false; // Break the loop
+            }
+        });
+        if (!valid) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Incomplete Form',
+                text: 'Please fill out all required fields before submitting.',
+            });
+        }
+        return valid;
+    }
+
     $('#manage-faculty').submit(function(e){
         e.preventDefault();
-       
-        $.ajax({
-            url: 'ajax.php?action=save_faculty',
-            method: 'POST',
-            data: $(this).serialize(),
-            success: function(resp){
-                if(resp == 1){
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success!',
-                        text: 'Faculty data successfully saved.',
-                        showConfirmButton: true,
-                       
-                    }).then(function(){
-                        location.reload();
-                    });
-                } else if(resp == 2){
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Failed!',
-                        text: 'ID No already exists.',
-                        showConfirmButton: true
-                    });
-                    end_load();
-                } else {
+        if (validateForm()) {
+            $.ajax({
+                url: 'ajax.php?action=save_faculty',
+                method: 'POST',
+                data: $(this).serialize(),
+                success: function(resp){
+                    if(resp == 1){
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: 'Faculty data successfully saved.',
+                            showConfirmButton: true,
+                        }).then(function(){
+                            location.reload();
+                        });
+                    } else if(resp == 2){
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed!',
+                            text: 'ID No already exists.',
+                            showConfirmButton: true
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: 'Failed to save faculty data.',
+                            showConfirmButton: true
+                        });
+                    }
+                },
+                error: function(xhr, status, error){
+                    console.error(xhr.responseText);
                     Swal.fire({
                         icon: 'error',
                         title: 'Error!',
-                        text: 'Failed to save faculty data.',
+                        text: 'Failed to save faculty data. Please try again later.',
                         showConfirmButton: true
                     });
-                    end_load();
                 }
-            },
-            error: function(xhr, status, error){
-                console.error(xhr.responseText);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error!',
-                    text: 'Failed to save faculty data. Please try again later.',
-                    showConfirmButton: true
-                });
-                end_load();
-            }
-        });
+            });
+        }
     });
 </script>
