@@ -1,199 +1,96 @@
 <?php include('db_connect.php');?>
+<!-- Include SweetAlert CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
-<div class="container-fluid">
-	
+<!-- Include SweetAlert JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<div class="container-fluid" style="margin-left: 1%;">
+<style>
+	input[type=checkbox] {
+		/* Double-sized Checkboxes */
+		-ms-transform: scale(1.5); /* IE */
+		-moz-transform: scale(1.5); /* FF */
+		-webkit-transform: scale(1.5); /* Safari and Chrome */
+		-o-transform: scale(1.5); /* Opera */
+		transform: scale(1.5);
+		padding: 10px;
+	}
+	.container {
+		height: 1000px; /* Set the desired height */
+		overflow-y: auto; /* Add vertical scroll if content overflows */
+	}
+</style>
 	<div class="col-lg-12">
-		<div class="row">
-			<!-- FORM Panel -->
-			<div class="col-md-4">
-			<form action="" id="manage-fees">
-				<div class="card">
-					<div class="card-header">
-						    Fees
-				  	</div>
-					<div class="card-body">
-							<input type="hidden" name="id">
-							<div class="form-group">
-						<label for="course" class="col-sm-3 control-label">Course</label>
-
-						<div class="col-sm-12">
-						<select class="form-control" name="course" id="course" required onchange="populateYear(this.value)">
-							<option value="0" disabled selected>Select Course</option>
-							<?php 
-									$sql = "SELECT * FROM courses";
-									$query = $conn->query($sql);
-									while($row= $query->fetch_array()):
-										$course = $row['course'];
-									?>
-							<option value="<?php echo $course ?>" <?php echo isset($meta['coursedesc']) && $meta['coursedesc'] == $course ? 'selected' : '' ?>><?php echo ucwords($course) ?></option>
-						<?php endwhile; ?>
-						</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="year" class="col-sm-6 control-label">Year</label>
-
-						<div class="col-sm-12">
-						<select class="form-control" name="year" id="year" required>
-							<option value="0" disabled selected>Select Year</option>
-							<?php 
-									$sql = "SELECT DISTINCT(year) FROM section ";
-									$query = $conn->query($sql);
-									while($row= $query->fetch_array()):
-										$year = $row['year'];
-									?>
-							<option value="<?php echo $year ?>"><?php echo ucwords($year) ?></option>
-						<?php endwhile; ?>
-						</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-12">
-							<label for="" class="control-label">Semester</label>
-							<select name="semester" class="form-control">
-								<option value="0" disabled selected>Select Semester</option>
-								<?php 
-										$sql = "SELECT * FROM semester";
-										$query = $conn->query($sql);
-										while($row= $query->fetch_array()):
-											$semester = $row['sem'];
-										?>
-								<option value="<?php echo $semester ?>" <?php echo isset($meta['semester']) && $meta['semester'] == $semester ? 'selected' : '' ?>><?php echo ucwords($semester) ?></option>
-							<?php endwhile; ?>
-							</select>
-							</div>
-						</div>
-							<div class="form-group">
-							<div class="col-sm-12">
-								<label class="control-label">Library Fees</label>
-								<input type="number" class="form-control" name="library" required>
-							</div>
-							</div>
-							<div class="form-group">
-							<div class="col-sm-12">
-								<label class="control-label">Computer Fees</label>
-								<input type="number" class="form-control" name="computer">
-							</div>
-							</div>
-							<div class="form-group">
-							<div class="col-sm-12">
-								<label class="control-label">School ID Fees</label>
-								<input type="number" class="form-control" name="school_id">
-							</div>
-							</div>
-							<div class="form-group">
-							<div class="col-sm-12">
-								<label class="control-label">Athletic Fees</label>
-								<input type="number" class="form-control" name="athletic">
-							</div>
-							</div>
-							<div class="form-group">
-							<div class="col-sm-12">
-								<label class="control-label">Admission Fees</label>
-								<input type="number" class="form-control" name="admission">
-							</div>
-							</div>
-							<div class="form-group">
-							<div class="col-sm-12">
-								<label class="control-label">Development Fees</label>
-								<input type="numer" class="form-control" name="development">
-							</div>
-							</div>
-							<div class="form-group">
-							<div class="col-sm-12">
-								<label class="control-label">Guidance Office Fees</label>
-								<input type="numer" class="form-control" name="guidance">
-							</div>
-							</div>
-							<div class="form-group">
-							<div class="col-sm-12">
-								<label class="control-label">Handbook Fees</label>
-								<input type="numer" class="form-control" name="handbook">
-							</div>
-							</div>
-							<div class="form-group">
-							<div class="col-sm-12">
-								<label class="control-label">Entrance Fees</label>
-								<input type="numer" class="form-control" name="entrance">
-							</div>
-							</div>
-							<div class="form-group">
-							<div class="col-sm-12">
-								<label class="control-label">Registration Fees</label>
-								<input type="numer" class="form-control" name="registration">
-							</div>
-							</div>
-							<div class="form-group">
-							<div class="col-sm-12">
-								<label class="control-label">Medical Fees</label>
-								<input type="numer" class="form-control" name="medical">
-							</div>
-							</div>
-							<div class="form-group">
-							<div class="col-sm-12">
-								<label class="control-label">Cultural Fees</label>
-								<input type="numer" class="form-control" name="cultural">
-							</div>
-							</div>
-							</div>
-							
-					<div class="card-footer">
-						<div class="row">
-							<div class="col-md-12">
-								<button class="btn btn-sm btn-primary col-sm-3 offset-md-3"> Add Fees</button>
-								<button class="btn btn-sm btn-default col-sm-3" type="button" onclick="_reset()"> Cancel</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</form>
+		
+			<div class="col-md-12">
+				
 			</div>
+		</div>
+		<div class="row">
 			<!-- FORM Panel -->
 
 			<!-- Table Panel -->
-			<div class="col-md-8">
+			<div class="col-md-12">
 				<div class="card">
 					<div class="card-header">
-						<b>Subject List</b>
+						<b>faculty List</b>
+						<span class="">
+
+							<button class="btn btn-primary btn-block btn-sm col-sm-2 float-right" type="button" id="new_faculty">
+					<i class="fa fa-user-plus"></i> New Entry</button>
+				</span>
 					</div>
 					<div class="card-body">
-						<table class="table table-bordered table-hover">
+						
+						<table class="table table-bordered table-condensed table-hover">
+							<colgroup>
+								<col width="5%">
+								<col width="20%">
+								<col width="30%">
+								<col width="20%">
+								<col width="10%">
+								<col width="15%">
+							</colgroup>
 							<thead>
 								<tr>
 									<th class="text-center">#</th>
-									<th class="text-center">Subject</th>
+									<th class="">ID No</th>
+									<th class="">Name</th>
+									<th class="">Email</th>
+									<th class="">Contact</th>
 									<th class="text-center">Action</th>
 								</tr>
 							</thead>
 							<tbody>
 								<?php 
 								$i = 1;
-								$subject = $conn->query("SELECT * FROM fees order by id asc");
-								while($row=$subject->fetch_assoc()):
+								$faculty =  $conn->query("SELECT *,concat(lastname,', ',firstname,' ',middlename) as name from faculty order by concat(lastname,', ',firstname,' ',middlename) asc");
+								while($row=$faculty->fetch_assoc()):
 								?>
 								<tr>
+									
 									<td class="text-center"><?php echo $i++ ?></td>
 									<td class="">
-										<p>Course: <b><?php echo $row['course'] ?></b></p>
-										<p>Year: <small><b><?php echo $row['year'] ?></b></small></p>
-										<p>Semester: <small><b><?php echo $row['semester'] ?></b></small></p>
-										<p>Library Fees: <small><b><?php echo $row['library'] ?></b></small></p>
-										<p>Computer Fees: <small><b><?php echo $row['computer'] ?></b></small></p>
-										<p>School ID Fees: <small><b><?php echo $row['school_id'] ?></b></small></p>
-										<p>Athletic Fees: <small><b><?php echo $row['athletic'] ?></b></small></p>
-										<p>Admission Fees: <small><b><?php echo $row['admission'] ?></b></small></p>
-										<p>Development Fees: <small><b><?php echo $row['development'] ?></b></small></p>
-										<p>Guidance Office Fees: <small><b><?php echo $row['guidance'] ?></b></small></p>
-										<p>Handbook Fees: <small><b><?php echo $row['handbook'] ?></b></small></p>
-										<p>Entrance Fees: <small><b><?php echo $row['entrance'] ?></b></small></p>
-										<p>Registration Fees: <small><b><?php echo $row['registration'] ?></b></small></p>
-										<p>Medical Fees: <small><b><?php echo $row['medical'] ?></b></small></p>
-										<p>Cultural Fees: <small><b><?php echo $row['cultural'] ?></b></small></p>
-										
+										 <p><b><?php echo $row['id_no'] ?></b></p>
+										 
+									</td>
+									<td class="">
+										 <p><b><?php echo ucwords($row['name']) ?></b></p>
+										 
+									</td>
+									<td class="">
+										 <p><b><?php echo $row['email'] ?></b></p>
+									</td>
+									<td class="text-right">
+										 <p><b><?php echo $row['contact'] ?></b></p>
+										 
 									</td>
 									<td class="text-center">
-										<button class="btn btn-sm btn-primary edit_fees" type="button" data-id="<?php echo $row['id'] ?>" data-course="<?php echo $row['course'] ?>" data-semester="<?php echo $row['semester'] ?>" data-year="<?php echo $row['year'] ?>" data-library="<?php echo $row['library'] ?>" data-computer="<?php echo $row['computer'] ?>" data-school_id="<?php echo $row['school_id'] ?>" data-athletic="<?php echo $row['athletic'] ?>" data-admission="<?php echo $row['admission'] ?>" data-development="<?php echo $row['development'] ?>" data-guidance="<?php echo $row['guidance'] ?>" data-handbook="<?php echo $row['handbook'] ?>" data-entrance="<?php echo $row['entrance'] ?>" data-registration="<?php echo $row['registration'] ?>" data-medical="<?php echo $row['medical'] ?>" data-cultural="<?php echo $row['cultural'] ?>">Edit</button>
-										<button class="btn btn-sm btn-danger delete_fees" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
+										<button class="btn btn-sm view_faculty" type="button" data-id="<?php echo $row['id'] ?>" >
+										<i class="fa fa fa-0x fa-eye text-secondary"></i></button>
+										<button class="btn btn-sm edit_faculty" type="button" data-id="<?php echo $row['id'] ?>" ><i class="fas fa-0x fa-edit text-primary"></i></button>
+										<button class="btn btn-sm delete_faculty" type="button" data-id="<?php echo $row['id'] ?>"><i class="fa fa fa-0x fa-trash-alt text-danger"></i></button>
 									</td>
 								</tr>
 								<?php endwhile; ?>
@@ -208,86 +105,94 @@
 
 </div>
 <style>
-	
 	td{
 		vertical-align: middle !important;
 	}
+	td p{
+		margin: unset
+	}
+	img{
+		max-width:100px;
+		max-height: 150px;
+	}
 </style>
 <script>
-	function _reset(){
-		$('#manage-fees').get(0).reset()
-		$('#manage-fees input,#manage-fees textarea').val('')
-	}
-	$('#manage-fees').submit(function(e){
-		e.preventDefault()
-		start_load()
-		$.ajax({
-			url:'ajax.php?action=save_fees',
-			data: new FormData($(this)[0]),
-		    cache: false,
-		    contentType: false,
-		    processData: false,
-		    method: 'POST',
-		    type: 'POST',
-			success:function(resp){
-				if(resp==1){
-					alert_toast("Data successfully added",'success')
-					setTimeout(function(){
-						location.reload()
-					},1500)
+    $(document).ready(function(){
+        $('table').dataTable();
+    });
 
-				}
-				else if(resp==2){
-					alert_toast("Data successfully updated",'success')
-					setTimeout(function(){
-						location.reload()
-					},1500)
+    $('#new_faculty').click(function(){
+        uni_modal("New Entry","manage_faculty.php",'mid-large');
+    });
 
-				}
-			}
-		})
-	})
-	$('.edit_fees').click(function(){
-		start_load()
-		var cat = $('#manage-fees')
-		cat.get(0).reset()
-		cat.find("[name='id']").val($(this).attr('data-id'))
-		cat.find("[name='course']").val($(this).attr('data-course'))
-		cat.find("[name='year']").val($(this).attr('data-year'))
-		cat.find("[name='semester']").val($(this).attr('data-semester'))
-		cat.find("[name='library']").val($(this).attr('data-library'))
-		cat.find("[name='computer']").val($(this).attr('data-computer'))
-		cat.find("[name='school_id']").val($(this).attr('data-school_id'))
-		cat.find("[name='athletic']").val($(this).attr('data-athletic'))
-		cat.find("[name='admission']").val($(this).attr('data-admission'))
-		cat.find("[name='development']").val($(this).attr('data-development'))
-		cat.find("[name='guidance']").val($(this).attr('data-guidance'))
-		cat.find("[name='handbook']").val($(this).attr('data-handbook'))
-		cat.find("[name='entrance']").val($(this).attr('data-entrance'))
-		cat.find("[name='registration']").val($(this).attr('data-registration'))
-		cat.find("[name='medical']").val($(this).attr('data-medical'))
-		cat.find("[name='cultural']").val($(this).attr('data-cultural'))
-		end_load()
-	})
-	$('.delete_fees').click(function(){
-		_conf("Are you sure to delete this subject?","delete_fees",[$(this).attr('data-id')])
-	})
-	function delete_fees($id){
-		start_load()
-		$.ajax({
-			url:'ajax.php?action=delete_fees',
-			method:'POST',
-			data:{id:$id},
-			success:function(resp){
-				if(resp==1){
-					alert_toast("Data successfully deleted",'success')
-					setTimeout(function(){
-						location.reload()
-					},1500)
+    $('.view_faculty').click(function(){
+        uni_modal("Faculty Details","view_faculty.php?id="+$(this).attr('data-id'),'');
+    });
 
-				}
-			}
-		})
-	}
-	$('table').dataTable()
+    $('.edit_faculty').click(function(){
+        uni_modal("Manage Faculty","manage_faculty.php?id="+$(this).attr('data-id'),'mid-large');
+    });
+
+    $('.delete_faculty').click(function(){
+        var id = $(this).attr('data-id');
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You will not be able to recover this data!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                delete_faculty(id);
+            }
+        });
+    });
+
+    function delete_faculty(id){
+       
+        $.ajax({
+            url: 'ajax.php?action=delete_faculty',
+            method: 'POST',
+            data: { id: id },
+            success: function(resp){
+                if(resp == 1){
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Deleted!',
+                        text: 'Faculty data successfully deleted.',
+                        showConfirmButton: true,
+                       
+                    }).then(function() {
+                        location.reload();
+                    });
+                }
+            }
+        });
+    }
+
+    function validateForm() {
+        let valid = true;
+        $('input, select').each(function() {
+            if ($(this).val() === '') {
+                valid = false;
+                return false;
+            }
+        });
+        if (!valid) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please fill out all fields before submitting!',
+            });
+        }
+        return valid;
+    }
+
+    $(document).on('submit', 'form', function(e) {
+        if (!validateForm()) {
+            e.preventDefault();
+        }
+    });
 </script>
