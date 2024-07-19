@@ -7,7 +7,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
-<div class="container-fluid" style="width:100%;">
+<div class="container-fluid" >
 	
 	<div class="col-lg-12">
 	
@@ -90,8 +90,8 @@
 								</div>
 							</div>
 							<div class="modal-footer">
-                                                               <button type="submit" class="btn btn-primary">Save</button>
-								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 								</div>
 						</form>
 					</div>
@@ -112,50 +112,62 @@
         $('#manage-course').get(0).reset();
         $('#manage-course input,#manage-course textarea').val('');
     }
+
     $('#manage-course').submit(function(e){
-    e.preventDefault();
-   
-    $.ajax({
-        url: 'ajax.php?action=save_course',
-        data: new FormData($(this)[0]),
-        cache: false,
-        contentType: false,
-        processData: false,
-        method: 'POST',
-        type: 'POST',
-        success: function(resp){
-            if(resp == 1){
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success!',
-                    text: 'Data successfully added!',
-                    showConfirmButton: true,
-                     
-                }).then(function() {
-                    location.reload();
-                });
-            } else if(resp == 2){
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success!',
-                    text: 'Data successfully updated!',
-                    showConfirmButton: true,
-                        
-                }).then(function() {
-                    location.reload();
-                });
-            } else if(resp == 0){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error!',
-                    text: 'Course already exists!',
-                    showConfirmButton: true,
-                        
-                });
-            }
+        e.preventDefault();
+
+        // Validation: Check if required fields are filled
+        let course = $("input[name='course']").val().trim();
+        let description = $("textarea[name='description']").val().trim();
+
+        if (course === '' || description === '') {
+            Swal.fire({
+                icon: 'warning',
+                title: 'warning!',
+                text: 'Please fill out all required fields.',
+                showConfirmButton: true
+            });
+            return; // Stop the form submission if validation fails
         }
+
+        $.ajax({
+            url: 'ajax.php?action=save_course',
+            data: new FormData($(this)[0]),
+            cache: false,
+            contentType: false,
+            processData: false,
+            method: 'POST',
+            type: 'POST',
+            success: function(resp){
+                if(resp == 1){
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Data successfully added!',
+                        showConfirmButton: true
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else if(resp == 2){
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Data successfully updated!',
+                        showConfirmButton: true
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else if(resp == 0){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Course already exists!',
+                        showConfirmButton: true
+                    });
+                }
+            }
+        });
     });
-});
 
     $('.edit_course').click(function(){
         start_load();
@@ -185,7 +197,6 @@
     });
 
     function delete_course(id){
-       
         $.ajax({
             url: 'ajax.php?action=delete_course',
             method: 'POST',
@@ -196,8 +207,7 @@
                         icon: 'success',
                         title: 'Deleted!',
                         text: 'Data successfully deleted.',
-                        showConfirmButton: true,
-                       
+                        showConfirmButton: true
                     }).then(function() {
                         location.reload();
                     });
