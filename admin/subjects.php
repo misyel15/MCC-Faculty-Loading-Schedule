@@ -189,7 +189,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary">Save</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             </div>
                         </form>
                     </div>
@@ -234,73 +234,84 @@
     }
 </style>
 <script>
-   $(document).ready(function() {
-    $('#subjectTable').DataTable();
+    $(document).ready(function() {
+        $('#subjectTable').DataTable();
 
-    $('#manage-subject').submit(function(e) {
-        e.preventDefault();
-        
-        var valid = true;
-        $('#manage-subject input, #manage-subject select, #manage-subject textarea').each(function() {
-            if ($(this).val() === "" || $(this).val() === null) {
-                valid = false;
-                return false;
+        $('#manage-subject').submit(function(e) {
+            e.preventDefault();
+            
+            var valid = true;
+            $('#manage-subject input, #manage-subject select, #manage-subject textarea').each(function() {
+                if ($(this).val() === "" || $(this).val() === null) {
+                    valid = false;
+                    return false;
+                }
+            });
+
+            if (!valid) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Warning!',
+                    text: 'Please fill out all required fields.',
+                    showConfirmButton: true
+                });
+                return;
             }
+
+            $.ajax({
+                url: 'ajax.php?action=save_subject',
+                data: new FormData($(this)[0]),
+                cache: false,
+                contentType: false,
+                processData: false,
+                method: 'POST',
+                type: 'POST',
+                success: function(resp){
+                    if(resp == 1){
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: 'Data successfully added!',
+                            showConfirmButton: true,
+                        }).then(function() {
+                            location.reload();
+                        });
+                    } else if(resp == 2){
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: 'Data successfully updated!',
+                            showConfirmButton: true,
+                        }).then(function() {
+                            location.reload();
+                        });
+                    } else if(resp == 0){
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: 'Subject already exists!',
+                            showConfirmButton: true,
+                        });
+                    }
+                }
+            });
         });
 
-        if (!valid) {
-            // Remove or comment out this section
-             
-            Swal.fire({
-                icon: 'warning',
-                title: 'Warning!',
-                text: 'Please fill out all required fields.',
-                showConfirmButton: true
-            });
-            return;
-        }
+        // Filter functionality
+        $('#filter-course, #filter-semester').on('change', function() {
+            var course = $('#filter-course').val();
+            var semester = $('#filter-semester').val();
 
-        $.ajax({
-            url: 'ajax.php?action=save_subject',
-            data: new FormData($(this)[0]),
-            cache: false,
-            contentType: false,
-            processData: false,
-            method: 'POST',
-            type: 'POST',
-            success: function(resp){
-                if(resp == 1){
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success!',
-                        text: 'Data successfully added!',
-                        showConfirmButton: true,
-                    }).then(function() {
-                        location.reload();
-                    });
-                } else if(resp == 2){
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success!',
-                        text: 'Data successfully updated!',
-                        showConfirmButton: true,
-                    }).then(function() {
-                        location.reload();
-                    });
-                } else if(resp == 0){
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error!',
-                        text: 'Subject already exists!',
-                        showConfirmButton: true,
-                    });
+            $('.subject-row').each(function() {
+                var rowCourse = $(this).data('course');
+                var rowSemester = $(this).data('semester');
+
+                if ((course === "" || course === rowCourse) && (semester === "" || semester === rowSemester)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
                 }
-            }
+            });
         });
     });
-
-    // Rest of your code...
-
-});
-
 </script>
