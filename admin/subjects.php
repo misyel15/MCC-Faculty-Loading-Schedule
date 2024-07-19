@@ -116,13 +116,13 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label class="control-label">Total Units</label>
-                                        <input type="number" class="form-control" name="units" min="0" required>
+                                        <input type="number" class="form-control" name="units"  required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label class="control-label">Lec Units</label>
-                                        <input type="number" class="form-control" name="lec_units" min="0" required>
+                                        <input type="number" class="form-control" name="lec_units"  required>
                                     </div>
                                 </div>
                                 <div class="form-group">
