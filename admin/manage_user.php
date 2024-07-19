@@ -48,8 +48,7 @@ foreach($user->fetch_array() as $k =>$v){
 <script>
 	$('#manage-user').submit(function(e){
     e.preventDefault(); // Prevent default form submission
-    start_load(); // Function to start a loading indicator (presumably)
-
+   
     $.ajax({
         url: 'ajax.php?action=save_user',
         method: 'POST',
@@ -60,18 +59,19 @@ foreach($user->fetch_array() as $k =>$v){
                             icon: 'success',
                             title: 'Success',
                             text: 'Data successfully updated!',
-                            showConfirmButton: false,
-                            timer: 1500
+                            showConfirmButton: true,
+                           
                         }).then(function() {
                             location.reload(); // Reload the page after user acknowledges the success message
                 });
             } else {
                 Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Username already exists. Please choose a different one.'
-                });
-                end_load(); // Function to end the loading indicator
+                    icon: 'success',
+                            title: 'Success',
+                            text: 'Data successfully updated!',
+                            showConfirmButton: true,
+                             });
+                
             }
         },
         error: function(xhr, status, error) {
@@ -80,7 +80,7 @@ foreach($user->fetch_array() as $k =>$v){
                 title: 'Oops...',
                 text: 'Failed to save data. Please try again later.'
             });
-            end_load(); // Function to end the loading indicator
+            
         }
     });
 });
