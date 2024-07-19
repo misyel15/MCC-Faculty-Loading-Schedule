@@ -82,22 +82,26 @@ if(isset($_GET['id'])){
 						</div>
 					</div>-->
 					<div class="form-group">
-						<label for="yrsection" class="col-sm-6 control-label">Section</label>
+    <label for="yrsection" class="col-sm-6 control-label">Section</label>
 
-						<div class="col-sm-12">
-						<select class="form-control" name="yrsection" id="yrsection" required onchange="populateSubjects()">
-							<option value="0" disabled selected>Select Yr. & Sec.</option>
-							<?php 
-									$sql = "SELECT * FROM section";
-									$query = $conn->query($sql);
-									while($row= $query->fetch_array()):
-										$course = $row['course'];
-									?>
-							<option value="<?php echo $row['year']."".$row['section'] ?>" <?php echo isset($meta['course']) && $meta['course'] == $row['year']."".$row['section'] ? 'selected' : '' ?>><?php echo ucwords($row['year']."".$row['section']) ?></option>
-						<?php endwhile; ?>
-						</select>
-						</div>
-					</div>
+    <div class="col-sm-12">
+        <select class="form-control" name="yrsection" id="yrsection" required onchange="populateSubjects()">
+            <option value="0" disabled selected>Select Yr. & Sec.</option>
+            <?php 
+                // Modify the SQL query to include an ORDER BY clause to sort by year
+                $sql = "SELECT * FROM section ORDER BY year ASC, section ASC";
+                $query = $conn->query($sql);
+                while ($row = $query->fetch_array()):
+                    $course = $row['course'];
+            ?>
+            <option value="<?php echo $row['year']."".$row['section'] ?>" <?php echo isset($meta['course']) && $meta['course'] == $row['year']."".$row['section'] ? 'selected' : '' ?>>
+                <?php echo ucwords($row['year']." ".$row['section']) ?>
+            </option>
+            <?php endwhile; ?>
+        </select>
+    </div>
+</div>
+
 					<div class="form-group">
                                 <label for="subject" class="col-sm-3 control-label">Subject</label>
 
@@ -192,6 +196,15 @@ if(isset($_GET['id'])){
 	$('#manage-roomschedule').submit(function(e){
     e.preventDefault();
    
+	if (!validateForm()) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'warning!',
+                text: 'Please fill in all required fields.',
+                showConfirmButton: true
+            });
+            return;
+        }
     $('#msg').html('');
     $.ajax({
         url: 'ajax.php?action=save_roomschedule',
@@ -237,6 +250,22 @@ if(isset($_GET['id'])){
     });
 });
 
+function validateForm() {
+        let isValid = true;
+        const requiredFields = ['faculty', 'semester', 'course', 'yrsection', 'subject', 'room', 'days', 'timeslot_id'];
+        
+        requiredFields.forEach(field => {
+            const element = document.querySelector(`[name="${field}"]`);
+            if (!element || element.value === '' || element.value === '0') {
+                isValid = false;
+                element.classList.add('is-invalid');
+            } else {
+                element.classList.remove('is-invalid');
+            }
+        });
+
+        return isValid;
+    }
 
 
 	document.getElementById('timeslot_id').addEventListener('change', function() {
