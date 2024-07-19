@@ -55,18 +55,25 @@ if(isset($_GET['id'])){
 				<textarea name="address" class="form-control" required><?php echo isset($address) ? $address : '' ?></textarea>
 			</div>
 		</div>
-		<div class="row form-group">
-			<div class="col-md-12 text-center">
-				<button class="btn btn-primary btn-sm" type="submit">Save</button>
-			</div>
-		</div>
+		
 	</form>
 </div>
 
 <script>
     $('#manage-faculty').submit(function(e){
         e.preventDefault();
-
+  // Validate contact number
+        let contact = $('input[name="contact"]').val().trim();
+        if (contact.length !== 11 || !/^\d{11}$/.test(contact)) {
+            valid = false;
+            $('input[name="contact"]').focus();
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Contact number must be exactly 11 digits.',
+            });
+            return false;
+        }
         // Validate form fields
         let valid = true;
         let fields = $(this).find('input[required], select[required], textarea[required]');
@@ -82,19 +89,6 @@ if(isset($_GET['id'])){
                 return false;
             }
         });
-
-        // Validate contact number
-        let contact = $('input[name="contact"]').val().trim();
-        if (contact.length !== 11 || !/^\d{11}$/.test(contact)) {
-            valid = false;
-            $('input[name="contact"]').focus();
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Contact number must be exactly 11 digits.',
-            });
-            return false;
-        }
 
         if (valid) {
             $.ajax({
