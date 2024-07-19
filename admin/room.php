@@ -91,115 +91,75 @@
 
 </div>
 <script>
-    $(document).ready(function(){
-        $('table').dataTable();
-    });
-
-    // Faculty Management
-
-    $('#new_faculty').click(function(){
-        uni_modal("New Entry","manage_faculty.php",'mid-large');
-    });
-
-    $('.view_faculty').click(function(){
-        uni_modal("Faculty Details","view_faculty.php?id="+$(this).attr('data-id'),'');
-    });
-
-    $('.edit_faculty').click(function(){
-        uni_modal("Manage Faculty","manage_faculty.php?id="+$(this).attr('data-id'),'mid-large');
-    });
-
-    $('.delete_faculty').click(function(){
-        var id = $(this).attr('data-id');
-        Swal.fire({
-            title: 'Are you sure?',
-            text: 'You will not be able to recover this data!',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                delete_faculty(id);
-            }
-        });
-    });
-
-    function delete_faculty(id){
-        
-        $.ajax({
-            url: 'ajax.php?action=delete_faculty',
-            method: 'POST',
-            data: { id: id },
-            success: function(resp){
-                if(resp == 1){
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Deleted!',
-                        text: 'Faculty data successfully deleted.',
-                        showConfirmButton: true,
-                        
-                    }).then(function() {
-                        location.reload();
-                    });
-                }
-            }
-        });
-    }
-
+   $(document).ready(function(){
+    $('table').dataTable();
+    
+  
     // Room Management
-
     function _reset(){
         $('#manage-room').get(0).reset();
         $('#manage-room input').val('');
     }
 
     $('#saveRoomBtn').click(function() {
-    $('#manage-room').submit();
-});
-
-$('#manage-room').submit(function(e){
-    e.preventDefault();
-
-    $.ajax({
-        url: 'ajax.php?action=save_room',
-        data: new FormData($(this)[0]),
-        cache: false,
-        contentType: false,
-        processData: false,
-        method: 'POST',
-        type: 'POST',
-        success: function(resp){
-            if(resp == 1){
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success!',
-                    text: 'Room data successfully added.',
-                    showConfirmButton: true
-                }).then(function() {
-                    location.reload();
-                });
-            } else if(resp == 2){
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success!',
-                    text: 'Room data successfully updated.',
-                    showConfirmButton: true
-                }).then(function() {
-                    location.reload();
-                });
-            } else if(resp == 3){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error!',
-                    text: 'Room name or ID already exists.',
-                    showConfirmButton: true
-                });
-            }
-        }
+        $('#manage-room').submit();
     });
-});
+
+    $('#manage-room').submit(function(e){
+        e.preventDefault();
+
+        // Validation: Check if required fields are filled
+        let room = $("input[name='room']").val().trim();
+        let room_id = $("input[name='room_id']").val().trim();
+
+        if (room === '' || room_id === '') {
+            Swal.fire({
+                icon: 'warning',
+                title: 'warning!',
+                text: 'Please fill out all required fields.',
+                showConfirmButton: true
+            });
+            return; // Stop the form submission if validation fails
+        }
+
+        $.ajax({
+            url: 'ajax.php?action=save_room',
+            data: new FormData($(this)[0]),
+            cache: false,
+            contentType: false,
+            processData: false,
+            method: 'POST',
+            type: 'POST',
+            success: function(resp){
+                if(resp == 1){
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Room data successfully added.',
+                        showConfirmButton: true
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else if(resp == 2){
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Room data successfully updated.',
+                        showConfirmButton: true
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else if(resp == 3){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Room name or ID already exists.',
+                        showConfirmButton: true
+                    });
+                }
+            }
+        });
+    });
 
     $('.edit_room').click(function(){
         start_load();
@@ -230,7 +190,6 @@ $('#manage-room').submit(function(e){
     });
 
     function delete_room(id){
-        
         $.ajax({
             url: 'ajax.php?action=delete_room',
             method: 'POST',
@@ -241,8 +200,7 @@ $('#manage-room').submit(function(e){
                         icon: 'success',
                         title: 'Deleted!',
                         text: 'Room data successfully deleted.',
-                        showConfirmButton: true,
-                    
+                        showConfirmButton: true
                     }).then(function() {
                         location.reload();
                     });
@@ -250,6 +208,7 @@ $('#manage-room').submit(function(e){
             }
         });
     }
+});
+</script>
 
-    $('table').dataTable();
 </script>
