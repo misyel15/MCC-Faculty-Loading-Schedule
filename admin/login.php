@@ -10,6 +10,12 @@ ob_end_flush();
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
+  <!-- Include SweetAlert CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+
+<!-- Include SweetAlert JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
+
   <title>School Faculty Scheduling System</title>
   <?php include('./header.php'); ?>
   <?php 
@@ -126,32 +132,41 @@ main#main {
   <main id="main" class=" bg-dark">
     <div id="login-left">
     </div>
-
-    <div id="login-right" style="box-shadow: 0 0 10px black;">
+<div id="login-right" style="box-shadow: 0 0 10px black;">
   <div class="card col-md-8" style="box-shadow: 0 0 10px black;">
     <div class="card-body">
-      <b><center><h1>Login</h1></center></b>
+      <!-- Header Box -->
+      <div class="card-header" style="display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: ligthgray; color: black; padding: 7px; border-radius: 0px; text-align: center; margin: 25px auto; max-width: 200%; box-shadow: 0 0 0px black; margin-top: -9%; margin-left: -10%; margin-right: -10%;">
+    <h1>Login</h1>
+</div>
+
+      <!-- Login Form -->
       <form id="login-form">
         <div class="form-group">
-         <b> <label for="username" class="control-label">Username</label></b>
+          <b><label for="username" class="control-label">Username</label></b>
           <div style="position: relative;">
             <i class="fas fa-user input-icon"></i> <!-- User icon -->
             <input type="text" id="username" name="username" class="form-control" placeholder="Enter Username" required="" style="box-shadow: 0 0 10px black;">
           </div>
         </div>
         <div class="form-group">
-         <b> <label for="password" class="control-label">Password</label></b>
+          <b><label for="password" class="control-label">Password</label></b>
           <div style="position: relative;">
             <i class="fas fa-lock input-icon"></i> <!-- Lock icon -->
             <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password" required="" style="box-shadow: 0 0 10px black;">
             <i class="fas fa-eye-slash eye-icon" id="togglePassword" style="box-shadow: 0 0 10px black;"></i> <!-- Initially closed eye -->
           </div>
         </div>
+        <div class="form-group form-check">
+          <input type="checkbox" id="rememberMe" name="rememberMe" class="form-check-input">
+          <label for="rememberMe" class="form-check-label"><b>Remember Me</b></label>
+        </div>
         <b><center><button class="btn-sm btn-block btn-wave col-md-4 btn-primary" style="box-shadow: 0 0 10px black;">Login</button></center></b>
       </form>
     </div>
   </div>
 </div>
+
   </main>
 
   <!-- Scripts -->
@@ -182,25 +197,47 @@ main#main {
     $('#login-form button[type="button"]').attr('disabled', true).html('Logging in...');
     if ($(this).find('.alert-danger').length > 0)
       $(this).find('.alert-danger').remove();
+    
     $.ajax({
       url: 'ajax.php?action=login',
       method: 'POST',
       data: $(this).serialize(),
       error: function(err) {
         console.log(err);
+        // Display SweetAlert error message
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong. Please try again later.'
+        });
         $('#login-form button[type="button"]').removeAttr('disabled').html('Login');
       },
       success: function(resp) {
         if (resp == 1) {
-          location.href = 'index.php';
+          // Display SweetAlert success message
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Login successful. Redirecting...',
+           
+            showConfirmButton: true
+          }).then(() => {
+            location.href = 'index.php';
+          });
         } else {
-          $('#login-form').prepend('<div class="alert alert-danger">Username or password is incorrect.</div>');
+          // Display SweetAlert error message
+          Swal.fire({
+            icon: 'error',
+            title: 'Login Failed',
+            text: 'Username or password is incorrect.'
+          });
           $('#login-form button[type="button"]').removeAttr('disabled').html('Login');
         }
       }
     });
   });
 });
+
 </script>
 </body>
 
