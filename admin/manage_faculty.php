@@ -113,13 +113,7 @@ $(document).ready(function() {
 
         // Check if contact contains only numbers and has exactly 11 digits
         if (!/^\d+$/.test(contact) || contact.length !== 11) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Warning!',
-                text: 'Contact number should be exactly 11 digits long and contain only numbers.',
-                showConfirmButton: true
-            });
-            return;
+
         }
 
         if (!valid) {
