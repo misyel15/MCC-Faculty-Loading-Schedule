@@ -171,28 +171,5 @@
             }
         });
     }
-
-    function validateForm() {
-        let valid = true;
-        $('input, select').each(function() {
-            if ($(this).val() === '') {
-                valid = false;
-                return false;
-            }
-        });
-        if (!valid) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'warning!',
-                text: 'Please fill out all fields before submitting!',
-            });
-        }
-        return valid;
-    }
-
-    $(document).on('submit', 'form', function(e) {
-        if (!validateForm()) {
-            e.preventDefault();
-        }
-    });
 </script>
+
