@@ -182,8 +182,8 @@
         });
         if (!valid) {
             Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
+                icon: 'warning',
+                title: 'warning!',
                 text: 'Please fill out all fields before submitting!',
             });
         }
