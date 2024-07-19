@@ -116,25 +116,25 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label class="control-label">Total Units</label>
-                                        <input type="text" class="form-control" name="units" >
+                                        <input type="number" class="form-control" name="units" min="0">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label class="control-label">Lec Units</label>
-                                        <input type="text" class="form-control" name="lec_units" >
+                                        <input type="number" class="form-control" name="lec_units" min="0">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label class="control-label">Lab Units</label>
-                                        <input type="text" class="form-control" name="lab_units" >
+                                        <input type="number" class="form-control" name="lab_units" min="0">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label class="control-label">Hours</label>
-                                        <input type="text" class="form-control" name="hours" >
+                                        <input type="number" class="form-control" name="hours" min="0">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -189,7 +189,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary">Save</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                             </div>
                         </form>
                     </div>
@@ -233,6 +233,7 @@
         margin: 2px;
     }
 </style>
+
 <script>
     $(document).ready(function() {
         $('#subjectTable').DataTable();
@@ -293,6 +294,45 @@
                             showConfirmButton: true,
                         });
                     }
+                }
+            });
+        });
+
+        // Delete functionality
+        $('.delete_subject').click(function() {
+            var id = $(this).data('id');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'ajax.php?action=delete_subject',
+                        method: 'POST',
+                        data: { id: id },
+                        success: function(resp) {
+                            if (resp == 1) {
+                                Swal.fire(
+                                    'Deleted!',
+                                    'Your subject has been deleted.',
+                                    'success'
+                                ).then(function() {
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire(
+                                    'Error!',
+                                    'An error occurred while deleting the subject.',
+                                    'error'
+                                );
+                            }
+                        }
+                    });
                 }
             });
         });
