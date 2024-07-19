@@ -88,114 +88,114 @@
             </div>
             <!-- Table Panel -->
 
-           <!-- Modal -->
-<div class="modal fade" id="subjectModal" tabindex="-1" role="dialog" aria-labelledby="subjectModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="subjectModalLabel">Subject Form</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+            <!-- Modal -->
+            <div class="modal fade" id="subjectModal" tabindex="-1" role="dialog" aria-labelledby="subjectModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="subjectModalLabel">Subject Form</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="" id="manage-subject">
+                            <div class="modal-body">
+                                <input type="hidden" name="id">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <label class="control-label">Subject</label>
+                                        <input type="text" class="form-control" name="subject" >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <label class="control-label">Description</label>
+                                        <textarea class="form-control" cols="30" rows='3' name="description" ></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <label class="control-label">Total Units</label>
+                                        <input type="text" class="form-control" name="units" >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <label class="control-label">Lec Units</label>
+                                        <input type="text" class="form-control" name="lec_units" >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <label class="control-label">Lab Units</label>
+                                        <input type="text" class="form-control" name="lab_units" >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <label class="control-label">Hours</label>
+                                        <input type="text" class="form-control" name="hours" >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <label for="course" class="control-label">Course</label>
+                                        <select class="form-control" name="course" id="course" >
+                                            <option value="0" disabled selected>Select Course</option>
+                                            <?php 
+                                                $sql = "SELECT * FROM courses";
+                                                $query = $conn->query($sql);
+                                                while($row= $query->fetch_array()):
+                                                    $course = $row['course'];
+                                                ?>
+                                            <option value="<?php echo  $course ?>"><?php echo ucwords($course) ?></option>
+                                            <?php endwhile; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <label for="cyear" class="control-label">Year</label>
+                                        <select class="form-control" name="cyear" id="cyear" >
+                                            <option value="" disabled selected>Select Year</option>
+                                            <option value="1st">1st</option>
+                                            <option value="2nd">2nd</option>
+                                            <option value="3rd">3rd</option>
+                                            <option value="4th">4th</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <label for="semester" class="control-label">Semester</label>
+                                        <select class="form-control" name="semester" id="semester" >
+                                            <option value="" disabled selected>Select Semester</option>
+                                            <option value="1st">1st</option>
+                                            <option value="2nd">2nd</option>
+                                            <option value="Summer">Summer</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <label for="specialization" class="control-label">Specialization</label>
+                                        <select class="form-control" name="specialization" id="specialization" >
+                                            <option value="" disabled selected>Select Specialization</option>
+                                            <option value="Major">Major</option>
+                                            <option value="Minor">Minor</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <form action="" id="manage-subject">
-                <div class="modal-body">
-                    <input type="hidden" name="id">
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <label class="control-label">Subject</label>
-                            <input type="text" class="form-control" name="subject" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <label class="control-label">Description</label>
-                            <textarea class="form-control" cols="30" rows='3' name="description" required></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <label class="control-label">Total Units</label>
-                            <input type="number" class="form-control" name="units" min="0" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <label class="control-label">Lec Units</label>
-                            <input type="number" class="form-control" name="lec_units" min="0" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <label class="control-label">Lab Units</label>
-                            <input type="number" class="form-control" name="lab_units" min="0" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <label class="control-label">Hours</label>
-                            <input type="number" class="form-control" name="hours" min="0" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <label for="course" class="control-label">Course</label>
-                            <select class="form-control" name="course" id="course" required>
-                                <option value="0" disabled selected>Select Course</option>
-                                <?php 
-                                    $sql = "SELECT * FROM courses";
-                                    $query = $conn->query($sql);
-                                    while($row= $query->fetch_array()):
-                                        $course = $row['course'];
-                                    ?>
-                                <option value="<?php echo  $course ?>"><?php echo ucwords($course) ?></option>
-                                <?php endwhile; ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <label for="cyear" class="control-label">Year</label>
-                            <select class="form-control" name="cyear" id="cyear" required>
-                                <option value="" disabled selected>Select Year</option>
-                                <option value="1st">1st</option>
-                                <option value="2nd">2nd</option>
-                                <option value="3rd">3rd</option>
-                                <option value="4th">4th</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <label for="semester" class="control-label">Semester</label>
-                            <select class="form-control" name="semester" id="semester" required>
-                                <option value="" disabled selected>Select Semester</option>
-                                <option value="1st">1st</option>
-                                <option value="2nd">2nd</option>
-                                <option value="Summer">Summer</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <label for="specialization" class="control-label">Specialization</label>
-                            <select class="form-control" name="specialization" id="specialization" required>
-                                <option value="" disabled selected>Select Specialization</option>
-                                <option value="Major">Major</option>
-                                <option value="Minor">Minor</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Save</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<!-- Modal -->
+            <!-- Modal -->
         </div>
     </div>
 </div>
@@ -234,148 +234,73 @@
     }
 </style>
 <script>
-    $(document).ready(function() {
-        $('#subjectTable').DataTable();
+   $(document).ready(function() {
+    $('#subjectTable').DataTable();
 
-        $('#manage-subject').submit(function(e) {
-            e.preventDefault();
-            
-            var valid = true;
-            $('#manage-subject input, #manage-subject select, #manage-subject textarea').each(function() {
-                if ($(this).val() === "" || $(this).val() === null) {
-                    valid = false;
-                    return false;
-                }
-            });
-
-            if (!valid) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Incomplete Form',
-                    text: 'Please fill in all required fields before submitting.',
-                    showConfirmButton: true,
-                });
-                return;
+    $('#manage-subject').submit(function(e) {
+        e.preventDefault();
+        
+        var valid = true;
+        $('#manage-subject input, #manage-subject select, #manage-subject textarea').each(function() {
+            if ($(this).val() === "" || $(this).val() === null) {
+                valid = false;
+                return false;
             }
-
-            $.ajax({
-                url: 'ajax.php?action=save_subject',
-                data: new FormData($(this)[0]),
-                cache: false,
-                contentType: false,
-                processData: false,
-                method: 'POST',
-                type: 'POST',
-                success: function(resp){
-                    if(resp == 1){
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success!',
-                            text: 'Data successfully added!',
-                            showConfirmButton: true,
-                             
-                        }).then(function() {
-                            location.reload();
-                        });
-                    } else if(resp == 2){
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success!',
-                            text: 'Data successfully updated!',
-                            showConfirmButton: true,
-                                
-                        }).then(function() {
-                            location.reload();
-                        });
-                    } else if(resp == 0){
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error!',
-                            text: 'Subject already exists!',
-                            showConfirmButton: true,
-                                
-                        });
-                    }
-                }
-            });
         });
 
-        $('.edit_subject').click(function() {
-            var cat = $('#manage-subject');
-            cat.get(0).reset();
-            cat.find("[name='id']").val($(this).attr('data-id'));
-            cat.find("[name='subject']").val($(this).attr('data-subject'));
-            cat.find("[name='description']").val($(this).attr('data-description'));
-            cat.find("[name='units']").val($(this).attr('data-units'));
-            cat.find("[name='lec_units']").val($(this).attr('data-lecunits'));
-            cat.find("[name='lab_units']").val($(this).attr('data-labunits'));
-            cat.find("[name='hours']").val($(this).attr('data-hours'));
-            cat.find("[name='course']").val($(this).attr('data-course'));
-            cat.find("[name='cyear']").val($(this).attr('data-year'));
-            cat.find("[name='semester']").val($(this).attr('data-semester'));
-            cat.find("[name='specialization']").val($(this).attr('data-special'));
-        });
-
-        $('.delete_subject').click(function() {
-            var id = $(this).attr('data-id');
+        if (!valid) {
+            // Remove or comment out this section
+             
             Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
                 icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    delete_subject(id);
-                }
+                title: 'Warning!',
+                text: 'Please fill out all required fields.',
+                showConfirmButton: true
             });
-        });
-
-        function delete_subject(id) {
-            $.ajax({
-                url: 'ajax.php?action=delete_subject',
-                method: 'POST',
-                data: { id: id },
-                success: function(resp) {
-                    if (resp == 1) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Deleted!',
-                            text: 'Data successfully deleted.',
-                            showConfirmButton: true,
-                           
-                        }).then(function() {
-                            location.reload();
-                        });
-                    }
-                }
-            });
+            return;
         }
 
-        $('#filter-course').change(function() {
-            filterSubjects();
-        });
-
-        $('#filter-semester').change(function() {
-            filterSubjects();
-        });
-
-        function filterSubjects() {
-            var course = $('#filter-course').val();
-            var semester = $('#filter-semester').val();
-            
-            $('.subject-row').each(function() {
-                var rowCourse = $(this).data('course');
-                var rowSemester = $(this).data('semester');
-                
-                if ((course === "" || course === rowCourse) && (semester === "" || semester === rowSemester)) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
+        $.ajax({
+            url: 'ajax.php?action=save_subject',
+            data: new FormData($(this)[0]),
+            cache: false,
+            contentType: false,
+            processData: false,
+            method: 'POST',
+            type: 'POST',
+            success: function(resp){
+                if(resp == 1){
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Data successfully added!',
+                        showConfirmButton: true,
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else if(resp == 2){
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Data successfully updated!',
+                        showConfirmButton: true,
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else if(resp == 0){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Subject already exists!',
+                        showConfirmButton: true,
+                    });
                 }
-            });
-        }
+            }
+        });
     });
+
+    // Rest of your code...
+
+});
+
 </script>
