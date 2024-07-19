@@ -55,7 +55,7 @@
 						<div class="modal-footer">
 							<button type="button" class="btn btn-primary" id="saveSectionBtn">Save</button>
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-
+							
 						</div>
 					</div>
 				</div>
@@ -168,11 +168,14 @@ $('#manage-section').submit(function(e){
                     showConfirmButton: true
                 });
             } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error!',
-                    text: 'An error occurred while saving the data.',
-                    showConfirmButton: true
+                   
+            Swal.fire({
+                icon: 'warning',
+                title: 'Warning!',
+                text: 'Please fill out all required fields.',
+                showConfirmButton: true
+            
+          
                 });
             }
         }
