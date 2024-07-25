@@ -116,25 +116,25 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label class="control-label">Total Units</label>
-                                        <input type="number" class="form-control" name="units" min="0">
+                                        <input type="text" class="form-control" name="units" >
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label class="control-label">Lec Units</label>
-                                        <input type="number" class="form-control" name="lec_units" min="0">
+                                        <input type="text" class="form-control" name="lec_units" >
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label class="control-label">Lab Units</label>
-                                        <input type="number" class="form-control" name="lab_units" min="0">
+                                        <input type="text" class="form-control" name="lab_units" >
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <label class="control-label">Hours</label>
-                                        <input type="number" class="form-control" name="hours" min="0">
+                                        <input type="number" class="form-control" name="hours" min="0" >
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -233,125 +233,141 @@
         margin: 2px;
     }
 </style>
-
 <script>
-    $(document).ready(function() {
-        $('#subjectTable').DataTable();
+$(document).ready(function() {
+    $('#subjectTable').DataTable();
 
-        $('#manage-subject').submit(function(e) {
-            e.preventDefault();
-            
-            var valid = true;
-            $('#manage-subject input, #manage-subject select, #manage-subject textarea').each(function() {
-                if ($(this).val() === "" || $(this).val() === null) {
-                    valid = false;
-                    return false;
-                }
-            });
-
-            if (!valid) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Warning!',
-                    text: 'Please fill out all required fields.',
-                    showConfirmButton: true
-                });
-                return;
+    // Handle form submission
+    $('#manage-subject').submit(function(e) {
+        e.preventDefault();
+        
+        var valid = true;
+        $('#manage-subject input, #manage-subject select, #manage-subject textarea').each(function() {
+            if ($(this).val() === "" || $(this).val() === null) {
+                valid = false;
+                return false;
             }
-
-            $.ajax({
-                url: 'ajax.php?action=save_subject',
-                data: new FormData($(this)[0]),
-                cache: false,
-                contentType: false,
-                processData: false,
-                method: 'POST',
-                type: 'POST',
-                success: function(resp){
-                    if(resp == 1){
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success!',
-                            text: 'Data successfully added!',
-                            showConfirmButton: true,
-                        }).then(function() {
-                            location.reload();
-                        });
-                    } else if(resp == 2){
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success!',
-                            text: 'Data successfully updated!',
-                            showConfirmButton: true,
-                        }).then(function() {
-                            location.reload();
-                        });
-                    } else if(resp == 0){
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error!',
-                            text: 'Subject already exists!',
-                            showConfirmButton: true,
-                        });
-                    }
-                }
-            });
         });
 
-        // Delete functionality
-        $('.delete_subject').click(function() {
-            var id = $(this).data('id');
+        if (!valid) {
             Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
                 icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: 'ajax.php?action=delete_subject',
-                        method: 'POST',
-                        data: { id: id },
-                        success: function(resp) {
-                            if (resp == 1) {
-                                Swal.fire(
-                                    'Deleted!',
-                                    'Your subject has been deleted.',
-                                    'success'
-                                ).then(function() {
-                                    location.reload();
-                                });
-                            } else {
-                                Swal.fire(
-                                    'Error!',
-                                    'An error occurred while deleting the subject.',
-                                    'error'
-                                );
-                            }
-                        }
+                title: 'Warning!',
+                text: 'Please fill out all required fields.',
+                showConfirmButton: true
+            });
+            return;
+        }
+
+        $.ajax({
+            url: 'ajax.php?action=save_subject',
+            data: new FormData($(this)[0]),
+            cache: false,
+            contentType: false,
+            processData: false,
+            method: 'POST',
+            type: 'POST',
+            success: function(resp){
+                if(resp == 1){
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Data successfully added!',
+                        showConfirmButton: true,
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else if(resp == 2){
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Data successfully updated!',
+                        showConfirmButton: true,
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else if(resp == 0){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Subject already exists!',
+                        showConfirmButton: true,
                     });
                 }
-            });
-        });
-
-        // Filter functionality
-        $('#filter-course, #filter-semester').on('change', function() {
-            var course = $('#filter-course').val();
-            var semester = $('#filter-semester').val();
-
-            $('.subject-row').each(function() {
-                var rowCourse = $(this).data('course');
-                var rowSemester = $(this).data('semester');
-
-                if ((course === "" || course === rowCourse) && (semester === "" || semester === rowSemester)) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-            });
+            }
         });
     });
+
+    // Handle delete button click
+    $('.delete_subject').click(function() {
+        var id = $(this).data('id');
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: 'ajax.php?action=delete_subject',
+                    method: 'POST',
+                    data: { id: id },
+                    success: function(resp) {
+                        if (resp == 1) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Your subject has been deleted.',
+                                'success'
+                            ).then(function() {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire(
+                                'Error!',
+                                'An error occurred while deleting the subject.',
+                                'error'
+                            );
+                        }
+                    }
+                });
+            }
+        });
+    });
+
+    // Handle edit button click
+    $('.edit_subject').click(function() {
+        var $this = $(this);
+        $('#manage-subject').find('[name="id"]').val($this.data('id'));
+        $('#manage-subject').find('[name="subject"]').val($this.data('subject'));
+        $('#manage-subject').find('[name="description"]').val($this.data('description'));
+        $('#manage-subject').find('[name="units"]').val($this.data('units'));
+        $('#manage-subject').find('[name="lec_units"]').val($this.data('lecunits'));
+        $('#manage-subject').find('[name="lab_units"]').val($this.data('labunits'));
+        $('#manage-subject').find('[name="hours"]').val($this.data('hours'));
+        $('#manage-subject').find('[name="course"]').val($this.data('course'));
+        $('#manage-subject').find('[name="cyear"]').val($this.data('year'));
+        $('#manage-subject').find('[name="semester"]').val($this.data('semester'));
+        $('#manage-subject').find('[name="specialization"]').val($this.data('special'));
+    });
+
+    // Filter functionality
+    $('#filter-course, #filter-semester').on('change', function() {
+        var course = $('#filter-course').val();
+        var semester = $('#filter-semester').val();
+
+        $('.subject-row').each(function() {
+            var rowCourse = $(this).data('course');
+            var rowSemester = $(this).data('semester');
+
+            if ((course === "" || course === rowCourse) && (semester === "" || semester === rowSemester)) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    });
+});
 </script>
