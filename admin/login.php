@@ -136,7 +136,7 @@ main#main {
   <div class="card col-md-8" style="box-shadow: 0 0 10px black;">
     <div class="card-body">
       <!-- Header Box -->
-      <div class="card-header" style="display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: ligthgray; color: black; padding: 7px; border-radius: 0px; text-align: center; margin: 25px auto; max-width: 200%; box-shadow: 0 0 0px black; margin-top: -9%; margin-left: -10%; margin-right: -10%;">
+    <!--  <div class="card-header" style="display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: ligthgray; color: black; padding: 7px; border-radius: 0px; text-align: center; margin: 25px auto; max-width: 200%; box-shadow: 0 0 0px black; margin-top: -9%; margin-left: -10%; margin-right: -10%;">-->
     <h1>Login</h1>
 </div>
 
@@ -157,10 +157,7 @@ main#main {
             <i class="fas fa-eye-slash eye-icon" id="togglePassword" style="box-shadow: 0 0 10px black;"></i> <!-- Initially closed eye -->
           </div>
         </div>
-        <div class="form-group form-check">
-          <input type="checkbox" id="rememberMe" name="rememberMe" class="form-check-input">
-          <label for="rememberMe" class="form-check-label"><b>Remember Me</b></label>
-        </div>
+       <br>
         <b><center><button class="btn-sm btn-block btn-wave col-md-4 btn-primary" style="box-shadow: 0 0 10px black;">Login</button></center></b>
       </form>
     </div>
