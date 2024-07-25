@@ -137,7 +137,7 @@ main#main {
     <div class="card-body">
       <!-- Header Box -->
     <!--  <div class="card-header" style="display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: ligthgray; color: black; padding: 7px; border-radius: 0px; text-align: center; margin: 25px auto; max-width: 200%; box-shadow: 0 0 0px black; margin-top: -9%; margin-left: -10%; margin-right: -10%;">-->
-    <h1>Login</h1>
+    <center><b><h2>Login</h2></center></b>
 </div>
 
       <!-- Login Form -->
