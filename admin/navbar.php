@@ -227,19 +227,20 @@
 
     <nav id="sidebar" style="box-shadow: 0 0 5px black; background-color:white;">
         <div class="sidebar-list">
-           <a href="index.php?page=home" class="nav-item nav-home"><span class='icon-field'><i class="fa fa-home"></i></span><span class="nav-text"> Dashboard</span></a>
-            <a href="index.php?page=courses" class="nav-item nav-courses"><span class='icon-field'><i class="fa fa-list"></i></span><span class="nav-text"> Course List</span></a>
-            <a href="index.php?page=subjects" class="nav-item nav-subjects"><span class='icon-field'><i class="fa fa-book"></i></span><span class="nav-text"> Subject List</span></a>
-            <a href="index.php?page=faculty" class="nav-item nav-faculty"><span class='icon-field'><i class="fa fa-user-tie"></i></span><span class="nav-text"> Faculty List</span></a>
-            <a href="index.php?page=room" class="nav-item nav-room"><span class='icon-field'><i class="fa-solid fa-school"></i></span><span class="nav-text"> Room List</span></a>
-            <a href="index.php?page=timeslot" class="nav-item nav-timeslot"><span class='icon-field'><i class="fa-solid fa-clock"></i></span><span class="nav-text"> Timeslot List</span></a>
-            <a href="index.php?page=section" class="nav-item nav-section"><span class='icon-field'><i class="fa-solid fa-list"></i></span><span class="nav-text"> Section List</span></a>
-            <a href="index.php?page=roomassigntry" class="nav-item nav-roomassigntry"><span class='icon-field'><i class="fa fa-table" aria-hidden="true"></i></span><span class="nav-text"> Room Assignment</span></a>
-            <a href="index.php?page=class_sched" class="nav-item nav-class_sched"><span class='icon-field'><i class="fa fa-table" aria-hidden="true"></i></span><span class="nav-text"> Class Schedule</span></a>
-            <a href="index.php?page=load" class="nav-item nav-load"><span class='icon-field'><i class="fa fa-table" aria-hidden="true"></i></span><span class="nav-text"> Instructor's Load</span></a>
-            <a href="index.php?page=summary" class="nav-item nav-summary"><span class='icon-field'><i class="fa fa-table" aria-hidden="true"></i></span><span class="nav-text"> Summary</span></a>
-            <a href="index.php?page=users" class="nav-item nav-users"><span class='icon-field'><i class="fa fa-users"></i></span><span class="nav-text"> Users</span></a>
-                   <?php if($_SESSION['login_id'] == 1): ?>
+           <a href="index.php?page=home" class="nav-item nav-home"><span class='icon-field'><i class="fa fa-home"></i></span> Dashboard</a>
+        <a href="index.php?page=courses" class="nav-item nav-courses"><span class='icon-field'><i class="fa fa-list"></i></span> Course List</a>
+        <a href="index.php?page=subjects" class="nav-item nav-subjects"><span class='icon-field'><i class="fa fa-book"></i></span> Subject List</a>
+        <a href="index.php?page=faculty" class="nav-item nav-faculty"><span class='icon-field'><i class="fa fa-user-tie"></i></span> Faculty List</a>
+        <a href="index.php?page=room" class="nav-item nav-room"><span class='icon-field'><i class="fa-solid fa-school"></i></span> Room List</a>
+        <a href="index.php?page=timeslot" class="nav-item nav-timeslot"><span class='icon-field'><i class="fa-solid fa-clock"></i></span> Timeslot List</a>
+        <a href="index.php?page=section" class="nav-item nav-section"><span class='icon-field'><i class="fa-solid fa-list"></i></span> Section List</a>
+        <a href="index.php?page=roomassigntry" class="nav-item nav-roomassigntry"><span class='icon-field'><i class="fa fa-table" aria-hidden="true"></i></span> Room Assignment</a>
+        <a href="index.php?page=class_sched" class="nav-item nav-class_sched"><span class='icon-field'><i class="fa fa-table" aria-hidden="true"></i></span> Class Schedule</a>
+        <a href="index.php?page=load" class="nav-item nav-load"><span class='icon-field'><i class="fa fa-table" aria-hidden="true"></i></span> Instructor's Load</a>
+        <a href="index.php?page=summary" class="nav-item nav-summary"><span class='icon-field'><i class="fa fa-table" aria-hidden="true"></i></span> Summary</a>
+        <a href="index.php?page=export" class="nav-item nav-export"><span class='icon-field'><i class="fa fa-table" aria-hidden="true"></i></span> Export CSV</a>
+        <a href="index.php?page=users" class="nav-item nav-users"><span class='icon-field'><i class="fa fa-users"></i></span> Users</a>
+                 <?php if($_SESSION['login_id'] == 1): ?>
                 <!-- Place additional admin-only links here if needed -->
             <?php endif; ?>
         </div>
