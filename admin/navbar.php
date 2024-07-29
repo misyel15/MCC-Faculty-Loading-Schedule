@@ -227,7 +227,7 @@
 
     <nav id="sidebar" style="box-shadow: 0 0 5px black; background-color:white;">
         <div class="sidebar-list">
-            <a href="index.php?page=home" class="nav-item nav-home"><span class='icon-field'><i class="fa fa-home"></i></span><span class="nav-text"> Dashboard</span></a>
+           <a href="index.php?page=home" class="nav-item nav-home"><span class='icon-field'><i class="fa fa-home"></i></span><span class="nav-text"> Dashboard</span></a>
             <a href="index.php?page=courses" class="nav-item nav-courses"><span class='icon-field'><i class="fa fa-list"></i></span><span class="nav-text"> Course List</span></a>
             <a href="index.php?page=subjects" class="nav-item nav-subjects"><span class='icon-field'><i class="fa fa-book"></i></span><span class="nav-text"> Subject List</span></a>
             <a href="index.php?page=faculty" class="nav-item nav-faculty"><span class='icon-field'><i class="fa fa-user-tie"></i></span><span class="nav-text"> Faculty List</span></a>
@@ -239,7 +239,7 @@
             <a href="index.php?page=load" class="nav-item nav-load"><span class='icon-field'><i class="fa fa-table" aria-hidden="true"></i></span><span class="nav-text"> Instructor's Load</span></a>
             <a href="index.php?page=summary" class="nav-item nav-summary"><span class='icon-field'><i class="fa fa-table" aria-hidden="true"></i></span><span class="nav-text"> Summary</span></a>
             <a href="index.php?page=users" class="nav-item nav-users"><span class='icon-field'><i class="fa fa-users"></i></span><span class="nav-text"> Users</span></a>
-            <?php if($_SESSION['login_id'] == 1): ?>
+                   <?php if($_SESSION['login_id'] == 1): ?>
                 <!-- Place additional admin-only links here if needed -->
             <?php endif; ?>
         </div>
