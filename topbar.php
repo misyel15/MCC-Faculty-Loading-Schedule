@@ -40,8 +40,7 @@
       <div class="col-md-4 float-left text-white">
         <img src="back.png" alt="Logo" style="width: 50px; height: 40px; margin-left: -5%; "> &nbsp; &nbsp; <large><b>School Faculty Scheduling System</b></large>
       <!-- Menu icon -->
-      &nbsp; &nbsp;<i class="fa fa-bars text-white" id="menuIcon" aria-hidden="true" style="font-size: 1.5rem; cursor: pointer;"></i>
-      
+     
       </div>
       <div class="float-right">             
         <div class="dropdown mr-4">
