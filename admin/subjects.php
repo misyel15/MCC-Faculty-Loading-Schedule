@@ -75,9 +75,8 @@
                                             <p><small><b>Semester:</b> <?php echo $row['semester']; ?></small></p>
                                             <p><small><b>Specialization:</b> <?php echo $row['specialization']; ?></small></p>
                                         </td>
-                                       <br>
-                                        <br>   
-                                        <td class="text-center">
+                                       
+                                        <td class="text-center" style="margin-top:2%;">
                                             <button class="btn btn-sm btn-primary edit_subject" type="button" data-id="<?php echo $row['id']; ?>" data-subject="<?php echo $row['subject']; ?>" data-description="<?php echo $row['description']; ?>" data-units="<?php echo $row['total_units']; ?>" data-lecunits="<?php echo $row['Lec_Units']; ?>" data-labunits="<?php echo $row['Lab_Units']; ?>" data-course="<?php echo $row['course']; ?>" data-year="<?php echo $row['year']; ?>" data-semester="<?php echo $row['semester']; ?>" data-special="<?php echo $row['specialization']; ?>" data-hours="<?php echo $row['hours']; ?>" data-toggle="modal" data-target="#subjectModal"><i class="fas fa-edit"></i> Edit</button>
                                             <button class="btn btn-sm btn-danger delete_subject" type="button" data-id="<?php echo $row['id']; ?>"><i class="fas fa-trash-alt"></i> Delete</button>
                                         </td>
