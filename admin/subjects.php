@@ -16,7 +16,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <b>Subject List</b>
-                        <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#subjectModal"><i class="fa fa-user-plus"></i> New Entry</button>
+                        <button class="btn btn-primary btn-block btn-sm col-sm-2 float-right" data-toggle="modal" data-target="#subjectModal"><i class="fa fa-user-plus"></i> New Entry</button>
                     </div>
                     <div class="card-body">
                         <!-- Filter Section -->
