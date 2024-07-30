@@ -170,8 +170,8 @@
 
         @media (max-width: 768px) {
             nav#sidebar {
-                width: 60%;
-                left: -60%;
+                width: 40%;
+                left: 0%;
             }
 
             nav#sidebar.sidebar-collapsed {
